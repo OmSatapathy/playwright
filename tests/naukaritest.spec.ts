@@ -13,6 +13,12 @@ test(`verify naukari homepage`, async({page})=>{
     await obj.verifyHeader()
     await obj.verifyOpenField()
     await page.waitForTimeout(3000)
+    await obj.verifyLogin()
+
+    const currentURL = await page.url()
+
+    expect(currentURL).toContain('/recruit/login')
 
 
 })
+

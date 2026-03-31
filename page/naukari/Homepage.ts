@@ -62,4 +62,9 @@ export class NaukariHome {
             throw new Error('❌ Lead Quality Engineer job not found');
         }
     }
+
+    async verifyLogin(){
+       await this.headerDropdown.hover()
+       await this.page.locator("//*[contains(text(),'Employer Login')]").click()
+    }
 }
