@@ -23,8 +23,6 @@ export class NaukariHome {
 
         this.listOfTitle = page.locator("//li[@class='tuple-wrap ']")
         this.numberofExp = page.locator("//ul[@class='dropdown ']//li")
-
-        ////ul[@class='dropdown ']//li
     }
 
 
@@ -44,10 +42,24 @@ export class NaukariHome {
         await this.listOfTitle.first().waitFor({ state: 'visible' });
 
         const count = await this.listOfTitle.count();
+        let found = false;
 
         for (let i = 0; i < count; i++) {
             const text = await this.listOfTitle.nth(i).innerText();
-            console.log(`Job ${i}: ${text.trim()}`);
+            const cleanText = text.trim();
+
+            console.log(`Job ${i}: ${cleanText}`);
+            if (cleanText.includes('Lead Quality Engineer')) {
+                console.log('✅ Found matching job, clicking...');
+
+                await this.listOfTitle.nth(i).click();
+                found = true;
+                break; 
+            }
+
+        }
+        if (!found) {
+            throw new Error('❌ Lead Quality Engineer job not found');
         }
     }
 }
