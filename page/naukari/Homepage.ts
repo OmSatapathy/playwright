@@ -1,0 +1,53 @@
+import { Page, Locator } from '@playwright/test'
+
+export class NaukariHome {
+    readonly page: Page;
+    readonly headers: Locator;
+    readonly loginBtn: Locator;
+    readonly registerBTN: Locator;
+    readonly headerDropdown: Locator
+    readonly enterskillFiled: Locator;
+    readonly selectExp: Locator;
+
+    readonly listOfTitle: Locator
+    readonly numberofExp: Locator
+
+    constructor(page: Page) {
+        this.page = page;
+        this.headers = page.locator("#nI-gNb-menus")
+        this.loginBtn = page.locator(".login_Layer")
+        this.registerBTN = page.locator(".register_Layer")
+        this.headerDropdown = page.getByText('For employers')
+        this.enterskillFiled = page.getByPlaceholder("Enter skills / designations / companies")
+        this.selectExp = page.getByPlaceholder('Select experience')
+
+        this.listOfTitle = page.locator("//li[@class='tuple-wrap ']")
+        this.numberofExp = page.locator("//ul[@class='dropdown ']//li")
+
+        ////ul[@class='dropdown ']//li
+    }
+
+
+
+    async verifyHeader() {
+        const total = await this.headers.count();
+
+        for (let i = 0; i < total; i++) {
+            const text = await this.headers.nth(i).innerText();
+            console.log(`Header ${i}: ${text.trim()}`);
+        }
+    }
+
+    async verifyOpenField() {
+        await this.enterskillFiled.fill("Lead QA");
+
+        await this.listOfTitle.first().waitFor({ state: 'visible' });
+
+        const count = await this.listOfTitle.count();
+
+        for (let i = 0; i < count; i++) {
+            const text = await this.listOfTitle.nth(i).innerText();
+            console.log(`Job ${i}: ${text.trim()}`);
+        }
+    }
+}
