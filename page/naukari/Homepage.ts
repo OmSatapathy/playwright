@@ -12,6 +12,9 @@ export class NaukariHome {
     readonly listOfTitle: Locator
     readonly numberofExp: Locator
 
+    readonly topcompanies: Locator
+    readonly paginationBtn: Locator
+
     constructor(page: Page) {
         this.page = page;
         this.headers = page.locator("#nI-gNb-menus")
@@ -23,6 +26,9 @@ export class NaukariHome {
 
         this.listOfTitle = page.locator("//li[@class='tuple-wrap ']")
         this.numberofExp = page.locator("//ul[@class='dropdown ']//li")
+
+        this.topcompanies=page.locator("//span[@class='industry-card ']")
+        this.paginationBtn=page.locator("//div[@class='swiper-button-next' and @role ='button']")
     }
 
 
@@ -66,5 +72,20 @@ export class NaukariHome {
     async verifyLogin(){
        await this.headerDropdown.hover()
        await this.page.locator("//*[contains(text(),'Employer Login')]").click()
+    }
+
+
+
+    async verifyTopCompanies(){
+        try {
+           const companiescount=  await this.topcompanies.count()
+           for (let i =0; i< companiescount; i++){
+              await this.topcompanies.nth(i).textContent()
+              console.log(await this.topcompanies.nth(i).textContent())
+           }
+            
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
