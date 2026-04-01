@@ -1,5 +1,6 @@
 import { test, expect, Browser, chromium } from '@playwright/test'
 import { NaukariHome } from '../page/naukari/Homepage'
+import{naukariLogin} from '../page/naukari/Login'
 
 test.use({
     viewport: { width: 1500, height: 1550 }
@@ -50,4 +51,14 @@ test('verifing top companies', async ({ page }) => {
     await obj.verifyTopCompanies()
 
 
+})
+
+test('verify login', async({page})=>{
+
+    const obj = new naukariLogin(page);
+    await obj.verifyLogin("omops92@gmail.com","hpprobook4410")
+
+    expect(await page.url()).toBe('https://www.naukri.com/mnjuser/homepage')
+
+    await obj.countNumbers()
 })

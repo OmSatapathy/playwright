@@ -88,4 +88,6 @@ export class NaukariHome {
             console.log(error)
         }
     }
+
+    
 }
