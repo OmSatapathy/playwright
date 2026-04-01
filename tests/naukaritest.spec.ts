@@ -61,4 +61,16 @@ test('verify login', async({page})=>{
     expect(await page.url()).toBe('https://www.naukri.com/mnjuser/homepage')
 
     await obj.countNumbers()
+
+    await page.locator("//a[@title='About us']").scrollIntoViewIfNeeded()
+
+    const allLinks = await page.locator("//a[@target='_blank']")
+    for(let i =0; i< await allLinks.count(); i++){
+        const values = await allLinks.nth(i).textContent()
+         if(values?.includes('View top skills')){
+            await allLinks.nth(i).click()
+            break
+         }
+        console.log(values)
+    }
 })
