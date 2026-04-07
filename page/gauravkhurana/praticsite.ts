@@ -72,5 +72,17 @@ export class GauravKhuranPage {
 
     }
 
+    async verifyIframes() {
+        await this.page.locator("//button[contains(text(),'Advanced')]").click({ timeout: 3000 })
+        await this.page.frameLocator('iframe').first()
+            .getByRole('button', { name: 'iFrame Button' }).first()
+            .click();
+        await this.page
+            .frameLocator('iframe').nth(1)        // outer
+            .frameLocator('iframe')       // inner
+            .getByText('Nested Content')
+            .click()
+    }
+
 }
 

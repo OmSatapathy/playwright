@@ -16,5 +16,7 @@ test("verify automation page", async ({ page }) => {
     await obj.mouseHover()
     await obj.verifyRightclick()
 
+    await obj.verifyIframes()
+
 
 })
