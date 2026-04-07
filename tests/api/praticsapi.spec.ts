@@ -1,5 +1,5 @@
 import { test, expect, request } from '@playwright/test'
-import { console } from 'inspector'
+
 
 test('check api health', async ({ request }) => {
 
