@@ -1,5 +1,5 @@
 
-import { test, expect, request } from '@playwright/test'
+import { test, expect, request, Browser, chromium } from '@playwright/test'
 import userdetails from '../testdata/userdetails.json'
 import { ExcelDataType } from 'xlsx'
 import * as XLSX from 'xlsx';
@@ -118,8 +118,35 @@ test("read excel data", async () => {
 
     //console.log(data);
 
-    for (const d of data as  any[]) {
+    for (const d of data as any[]) {
         console.log(d.username)
+    }
+
+})
+
+
+test("window handling", async ({ browser }) => {
+
+    const browers = await chromium.launch()
+
+    const context = await browers.newContext()
+
+    const page = await context.newPage()
+
+    await page.goto("https://sauce-demo.myshopify.com/")
+    const pages: any = [];
+
+    for (let i = 0; i < 3; i++) {
+        const [newPage] = await Promise.all([
+            context.waitForEvent("page"),
+            page.locator("//a[@target='_blank']").nth(i).click()
+        ]);
+        await newPage.waitForLoadState();
+        pages.push(newPage);
+    }
+
+    for (const p of pages) {
+        console.log(await p.title());
     }
 
 })
