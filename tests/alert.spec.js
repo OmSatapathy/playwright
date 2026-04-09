@@ -62,20 +62,20 @@ test.skip('verify user creation request', async ({ request }) => {
 })
 
 
-test('verify mock payment api', async({page})=>{
+test('verify mock payment api', async ({ page }) => {
 
-  await page.route("**/api/pay",async route =>{
-    const request =  route.request()
-     const body =   request.postDataJSON()
+  await page.route("**/api/pay", async route => {
+    const request = route.request()
+    const body = request.postDataJSON()
 
-     if(data.cardnumber ==='326q646'){
-        await route.fulfill({status: 200, contentType: 'application/json', body:JSON.stringify({ status: 'success' })});
-     }
-     else{
-        await route.fulfill({status: 400, contentType: 'application/json', body: JSON.stringify({ status: 'failed' })});
-     }
+    if (data.cardnumber === '326q646') {
+      await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ status: 'success' }) });
+    }
+    else {
+      await route.fulfill({ status: 400, contentType: 'application/json', body: JSON.stringify({ status: 'failed' }) });
+    }
   })
-  
+
 })
 
 
