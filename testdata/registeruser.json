@@ -1,0 +1,18 @@
+[
+{
+    "firsname":"rabin",
+    "lastname": "singh",
+    "password": "rabin@gmail.com",
+    "gender" :"male"
+},
+{
+    "firsname":"kapil",
+    "lastname": "dash",
+    "password": "kapil@gmail.com"
+},
+{
+    "firsname":"malay",
+    "lastname": "tt",
+    "password": "malay@gmail.com"
+}
+]
