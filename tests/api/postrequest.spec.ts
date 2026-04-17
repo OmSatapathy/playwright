@@ -32,6 +32,7 @@ test(`validate get request`, async ({ request }) => {
 
     });
 
+
     respjson.forEach((ele: any) => {
         expect(ele).toHaveProperty('id')
         expect(ele).toHaveProperty('email')
@@ -46,4 +47,39 @@ test(`validate get request`, async ({ request }) => {
     });
 
 
+})
+
+
+test('mocking via stubs', async ({ page }) => {
+
+    await page.route('**/api/products', async (route) => {
+        await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify([{ name: 'Strawberry', id: 21 }])
+        });
+    });
+
+    await page.goto('https://demo.playwright.dev/api-mocking');
+
+
+    await expect(page.getByText('Strawberry', { exact: true })).toBeVisible();
+});
+
+
+test ('parsing mocking object', async ({page})=>{
+
+     await page.route('**/api/products', async (route)=>{
+
+        await  route.fulfill({
+               status: 200,
+               body: JSON.stringify([{ name: 'Strawberry', id: 21 }]),
+               contentType: 'application/json'
+          })
+  
+     })
+
+       await page.goto('https://demo.playwright.dev/api-mocking');
+
+       await expect(page.getByText('Strawberry')).toBeVisible()
 })
