@@ -1,6 +1,17 @@
-import { test, expect } from '../fixtures/kutrim.fixture'
+import {test,expect} from '../fixtures/createaccount.fixture'
+import kutrimuser from '../testdata/kutrimuser.json'
 
-test('validate homepage', async({HomepageKutrim}) =>{
+kutrimuser.forEach((data)=>{
 
-   await expect(HomepageKutrim).toHaveURL('https://www.olakrutrim.com');
+    test(`Register user: ${data.email}`, async ({registeruser})=>{
+
+        await registeruser.getByPlaceholder('Enter your first name').fill(data.firstName)
+        await registeruser.getByPlaceholder('Enter your last name').fill(data.lastName)
+        await registeruser.getByPlaceholder('Enter your email address').fill(data.email)
+        await registeruser.getByPlaceholder('Enter your mobile number').fill(data.mobile)
+        await registeruser.locator("#password").fill(data.password)
+        await registeruser.locator("#confirmPassword").fill(data.password)
+
+    })
+
 })
